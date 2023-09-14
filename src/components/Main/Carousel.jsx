@@ -57,16 +57,13 @@ export default function Carousel({ title }) {
                       <Card>
                         <CardMedia
                           component="img"
-                          height="300"
-                          width="20"
+                          height="400"
+                          width={"auto"}
                           image={movie.thumbnail}
                           alt={movie.title}
                           title={movie.title}
                           sx={{
-                            "&:hover": {
-                              height: "400",
-                              width: "auto",
-                            },
+                            position: "cover",
                           }}
                         />
                       </Card>

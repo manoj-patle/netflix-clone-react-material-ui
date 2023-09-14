@@ -28,6 +28,15 @@ function App() {
           />
           <Route
             exact
+            path="/mylist"
+            element={
+              <Protected>
+                <Home />
+              </Protected>
+            }
+          />
+          <Route
+            exact
             path="/movie/:title"
             element={
               <Protected>

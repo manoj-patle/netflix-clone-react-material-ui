@@ -18,7 +18,7 @@ import {
 import React, { useState, useEffect } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { common, grey } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MyImage from "../MyImages";
 import axios from "axios";
 
@@ -29,16 +29,6 @@ function NavbarTailwind() {
   const navigate = useNavigate();
 
   const handleCloseNavMenu = () => {};
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const pages = ["My List", "Movies", "TV Shows"];
-    const url = "https://academics.newtonschool.co/api/v1/ott/show";
-    const config = {
-      headers: { projectId: "exn9j6ivl5cz" },
-    };
-    axios.get(url, config).then((res) => setData(res.data.data));
-  }, []);
 
   const handleSignOut = () => {
     localStorage.clear();
@@ -97,24 +87,28 @@ function NavbarTailwind() {
       </AppBar> */}
       <div className="flex items-center p-4 z-[100] my-2 justify-between w-full absolute">
         <div className="flex items-center">
-          <img
-            src="/images/netflix-long-logo.svg"
-            alt="Netflix Logo"
-            style={{
-              width: "120px",
-              height: "auto",
-              marginRight: "20px",
-            }}
-          />
+          <Link to="/home">
+            <img
+              src="/images/netflix-long-logo.svg"
+              alt="Netflix Logo"
+              style={{
+                width: "120px",
+                height: "auto",
+                marginRight: "20px",
+              }}
+            />
+          </Link>
           {pages.map((page) => (
-            <Button
-              size="small"
-              key={page}
-              onClick={handleCloseNavMenu}
-              sx={{ color: "white" }}
-            >
-              {page}
-            </Button>
+            <Link key={page} to={page}>
+              <Button
+                size="small"
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ color: "white" }}
+              >
+                {page}
+              </Button>
+            </Link>
           ))}
         </div>
         <div>
