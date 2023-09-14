@@ -16,11 +16,13 @@ import {
 import MyImage from "./MyImages";
 // eslint-disable-next-line no-unused-vars
 import { common, grey } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 function LoginComponent() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   return (
     <>
       <Wrapper>
@@ -156,23 +158,25 @@ function LoginComponent() {
                       borderColor: grey[500],
                       bgcolor: "rgba(0, 0, 0, 0.4)",
                     }}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs="auto">
-                  <Button
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                    sx={{
-                      height: "100%",
-                      borderRadius: "3px",
-                      textTransform: "none",
-                      fontSize: "22px",
-                    }}
-                    onClick={() => navigate("/register")}
-                  >
-                    Get Started
-                  </Button>
+                  <Link to={"/register"} state={{ email: email }}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                      sx={{
+                        height: "100%",
+                        borderRadius: "3px",
+                        textTransform: "none",
+                        fontSize: "22px",
+                      }}
+                    >
+                      Get Started
+                    </Button>
+                  </Link>
                 </Grid>
               </Grid>
             </Container>

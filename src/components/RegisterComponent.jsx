@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import MyImage from "./MyImages";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { signUp } from "../API/auth";
 
 const style = {
@@ -30,8 +30,11 @@ const style = {
 };
 
 export default function RegisterComponent() {
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails, setUserDetails] = useState({
+    email: location.state.email,
+  });
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
 
@@ -113,6 +116,7 @@ export default function RegisterComponent() {
                 name="email"
                 label="Email"
                 variant="filled"
+                value={userDetails.email}
                 onChange={(e) =>
                   setUserDetails({ ...userDetails, email: e.target.value })
                 }
