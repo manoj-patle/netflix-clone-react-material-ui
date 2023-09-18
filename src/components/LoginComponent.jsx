@@ -131,7 +131,9 @@ function LoginComponent() {
               component="p"
               color="common.white"
               textAlign="center"
-              sx={{ my: 3 }}
+              sx={{
+                my: 3,
+              }}
             >
               Ready to watch? Enter your email to create or restart your
               membership.

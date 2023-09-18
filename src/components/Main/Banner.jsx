@@ -1,11 +1,26 @@
-import { Box. useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import uiConfigs from "../../configs/ui.configs";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { PlayArrow } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   const [data, setData] = useState([]);
-  const movie = data[Math.floor(Math.random() * data.length - 1)];
+  const theme = useTheme();
+  // const movie = data[Math.floor(Math.random() * data.length - 1)];
   useEffect(() => {
     const url = "https://academics.newtonschool.co/api/v1/ott/show";
     const config = {
@@ -13,18 +28,8 @@ const Banner = () => {
     };
     axios.get(url, config).then((res) => setData(res.data.data));
   }, []);
+  console.log(data[0]);
   return (
-    // <>
-    //   <div className="w-full h-[550px] text-white">
-    //     <div className="w-full h-full">
-    //       <img
-    //         className="w-full h-full object-cover"
-    //         src={movie?.thumbnail}
-    //         alt={movie?.title}
-    //       />
-    //     </div>
-    //   </div>
-    // </>
     <>
       <Box
         sx={{
@@ -46,18 +51,17 @@ const Banner = () => {
         <Swiper
           grabCursor={true}
           loop={true}
-          // modules={[Autoplay]}
           style={{ width: "100%", height: "max-content" }}
           // autoplay={{
-          //   delay: 3000,
-          //   disableOnInteraction: false
+          //   delay: 1000,
+          //   disableOnInteraction: false,
           // }}
         >
-          {movies.map((movie, index) => (
-            <SwiperSlide key={index}>
+          {data.map((movie) => (
+            <SwiperSlide key={movie?._id}>
               <Box
                 sx={{
-                  paddingTop: {
+                  paddingBottom: {
                     xs: "130%",
                     sm: "80%",
                     md: "60%",
@@ -65,9 +69,7 @@ const Banner = () => {
                   },
                   backgroundPosition: "top",
                   backgroundSize: "cover",
-                  backgroundImage: `url(${tmdbConfigs.backdropPath(
-                    movie.backdrop_path || movie.poster_path
-                  )})`,
+                  backgroundImage: `url(${movie?.thumbnail})`,
                 }}
               />
               <Box
@@ -118,22 +120,19 @@ const Banner = () => {
 
                     <Stack direction="row" spacing={1} alignItems="center">
                       {/* rating */}
-                      <CircularRate value={movie.vote_average} />
+                      {/* <CircularRate value={movie.vote_average} /> */}
                       {/* rating */}
 
                       <Divider orientation="vertical" />
                       {/* genres */}
-                      {[...movie.genre_ids]
+                      {[...movie.keywords]
                         .splice(0, 2)
                         .map((genreId, index) => (
                           <Chip
                             variant="filled"
                             color="primary"
                             key={index}
-                            label={
-                              genres.find((e) => e.id === genreId) &&
-                              genres.find((e) => e.id === genreId).name
-                            }
+                            label={genreId}
                           />
                         ))}
                       {/* genres */}
@@ -146,7 +145,7 @@ const Banner = () => {
                         ...uiConfigs.style.typoLines(3),
                       }}
                     >
-                      {movie.overview}
+                      {movie.description}
                     </Typography>
                     {/* overview */}
 
@@ -154,9 +153,10 @@ const Banner = () => {
                     <Button
                       variant="contained"
                       size="large"
-                      startIcon={<PlayArrowIcon />}
+                      startIcon={<PlayArrow />}
                       component={Link}
-                      to={routesGen.mediaDetail(mediaType, movie.id)}
+                      to={`/movie/${movie.title}`}
+                      state={{ movie: movie }}
                       sx={{ width: "max-content" }}
                     >
                       watch now
