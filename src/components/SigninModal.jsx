@@ -128,6 +128,7 @@ export default function SigninModal() {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 label="Password"
+                autoComplete="off"
                 variant="filled"
                 onChange={(e) =>
                   setUserDetails({ ...userDetails, password: e.target.value })

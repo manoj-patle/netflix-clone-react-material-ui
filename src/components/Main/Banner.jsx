@@ -28,7 +28,7 @@ const Banner = () => {
     };
     axios.get(url, config).then((res) => setData(res.data.data));
   }, []);
-  console.log(data[0]);
+
   return (
     <>
       <Box

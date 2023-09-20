@@ -1,6 +1,3 @@
-// import Image from "next/image";
-// eslint-disable-next-line no-unused-vars
-
 import {
   AppBar,
   Box,
@@ -13,11 +10,19 @@ import {
 import { grey } from "@mui/material/colors";
 import { Link, useNavigate } from "react-router-dom";
 import MyImage from "../MyImages";
+import { useEffect, useState } from "react";
 
-// eslint-disable-next-line react/prop-types
 function Navbar() {
+  const [userName, setUserName] = useState("");
   const pages = { mylist: "My List", movies: "Movies", tvshow: "TV Shows" };
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user.data);
+    setUserName(user.data.name);
+  }, [userName]);
+  // console.log(userName);
 
   return (
     <>
@@ -67,18 +72,18 @@ function Navbar() {
             </Grid>
 
             <Grid item xs="auto">
-              <Typography>Hello</Typography>
+              <Typography>Hello {userName}</Typography>
             </Grid>
             <Grid item xs="auto">
               <Button
                 color="primary"
-                variant="contained"
+                variant="filled"
                 onClick={() => {
                   localStorage.clear();
                   navigate("/login");
                 }}
               >
-                Sign out
+                Sign Out
               </Button>
             </Grid>
           </Grid>
@@ -87,6 +92,5 @@ function Navbar() {
     </>
   );
 }
-
 
 export default Navbar;

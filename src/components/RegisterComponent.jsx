@@ -41,7 +41,7 @@ export default function RegisterComponent() {
   const handleRegister = async () => {
     try {
       await signUp(userDetails.name, userDetails.email, userDetails.password);
-      navigate("/home");
+      navigate("/login");
     } catch (err) {
       console.error(err);
       if (!userDetails.name) {
@@ -139,6 +139,7 @@ export default function RegisterComponent() {
                 type={showPassword ? "text" : "password"}
                 label="Password"
                 variant="filled"
+                autoComplete="off"
                 onChange={(e) =>
                   setUserDetails({ ...userDetails, password: e.target.value })
                 }

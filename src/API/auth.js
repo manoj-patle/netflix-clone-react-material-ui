@@ -15,12 +15,6 @@ export const signUp = async (name, email, password) => {
     };
     const response = await axios.post(signup_url, data, { headers });
     if (response.data.status === "success") {
-      localStorage.setItem("user", JSON.stringify(response.data));
-      const decodeToken = jwtDecode(response.data.token);
-      const currTime = Date.now() / 1000;
-      if (decodeToken.exp < currTime) {
-        throw new Error("Token expired, please login again");
-      }
       return response.data;
     } else {
       throw new Error("Sign up failed");
@@ -34,8 +28,8 @@ export const signIn = async (email, password) => {
   try {
     const login_url = `${BASE_URL}/user/login`;
     const data = {
-      email: email,
-      password: password,
+      email,
+      password,
       appType: "ott",
     };
     const response = await axios.post(login_url, data, { headers });
